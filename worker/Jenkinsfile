@@ -23,6 +23,12 @@ pipeline {
       when {
         changeset "**/worker/**"
       }
+      agent {
+        docker {
+          image 'maven:3.9.8-sapmachine-21'
+          args '-v $HOME/.m2:/root/.m2'
+        }
+      }
       steps {
         echo 'Running Unit Tests on worker app..'
         dir('worker') {
