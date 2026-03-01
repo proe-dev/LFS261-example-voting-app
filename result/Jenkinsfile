@@ -1,0 +1,47 @@
+pipeline {
+  agent any
+
+  tools {
+    maven 'nodejs 25.7.0'
+  }
+
+  stages {
+    stage ("build"){
+      when {
+        changeset "**/result/**"
+      }
+      steps {
+        echo 'Compiling result app..'
+        dir('result') {
+          sh 'npm install'
+        }
+      }
+    }
+    stage ("test") {
+      when {
+        changeset "**/result/**"
+      }
+      steps {
+        echo 'Running Unit Tests on result app..'
+        dir('result') {
+          sh 'npm install'
+          sh 'npm test'
+        }
+      }
+    }
+    stage ("notify") {
+      when {
+        changeset "**/result/**"
+      }
+      steps {
+        echo 'Sending Discord notification'
+        // discordSend description: "Jenkins Pipeline Build", footer: "Devops Experimentation", link: env.BUILD_URL, result: currentBuild.currentResult, title: env.JOB_NAME, webhookURL: "NOPE"
+      }
+    }
+  }
+  post {
+    always {
+      echo 'Building multibranch pipeline for worker is completed..'
+    }
+  }
+}
