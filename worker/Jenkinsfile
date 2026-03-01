@@ -58,7 +58,7 @@ pipeline {
     stage ("docker-package") {
       when {
         changeset "**/worker/**"
-        branch 'master'
+      //  branch 'master'
       }
       agent any
       steps {
