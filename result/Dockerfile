@@ -1,7 +1,7 @@
 FROM node:22.4.0-slim
 
 RUN apt-get update && \
-    apt-get-install -y --no-install-recommends curl tini && \
+    apt-get install -y --no-install-recommends curl tini && \
     rm -rf /var/lib/apt/lists/*
 
 WORKDIR /usr/local/app
@@ -16,7 +16,7 @@ RUN npm ci && \
 
 COPY . .
 
-ENV PORT 80
+ENV PORT=80
 EXPOSE 80
 
 ENTRYPOINT ["/usr/bin/tini", "--"]
