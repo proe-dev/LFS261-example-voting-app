@@ -2,6 +2,11 @@ pipeline {
   agent none
 
   stages {
+    stage ("hello"){
+      steps {
+        echo "Hello world"
+      }
+    }
     stage ("worker-build"){
       when {
         changeset "**/worker/**"
