@@ -5,8 +5,8 @@ networks:
     driver: bridge
 services:
     vote:
-      image: meapeze/vote:latest
-      # build: ./vote
+      # image: meapeze/vote:latest
+      build: ./vote
       ports:
         - 5000:80
       depends_on:
@@ -31,8 +31,8 @@ services:
         test: /healthchecks/postgres.sh
         interval: "5s"
     result:
-      image: meapeze/result:latest
-      # build: ./result
+      # image: meapeze/result:latest
+      build: ./result
       ports:
         - 5001:80
       depends_on:
@@ -40,8 +40,8 @@ services:
       networks:
         - instavote
     worker:
-      image: meapeze/worker:latest
-      # build: ./worker
+      # image: meapeze/worker:latest
+      build: ./worker
       networks:
         - instavote
       depends_on:
