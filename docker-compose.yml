@@ -6,6 +6,7 @@ networks:
 services:
     vote:
       image: meapeze/vote:latest
+      # build: ./vote
       ports:
         - 5000:80
       depends_on:
@@ -31,6 +32,7 @@ services:
         interval: "5s"
     result:
       image: meapeze/result:latest
+      # build: ./result
       ports:
         - 5001:80
       depends_on:
@@ -39,6 +41,7 @@ services:
         - instavote
     worker:
       image: meapeze/worker:latest
+      # build: ./worker
       networks:
         - instavote
       depends_on:
