@@ -118,6 +118,7 @@ pipeline {
             voteImage.push("latest")
           }
         }
+      }
     }
     stage ("result-build"){
       when {
