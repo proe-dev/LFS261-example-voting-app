@@ -84,6 +84,9 @@ pipeline {
           args '--user root'
         }
       }
+      when {
+        changeset "**/vote/**"
+      }
       steps{ 
         echo 'Compiling vote app.' 
         dir('vote'){
@@ -98,6 +101,9 @@ pipeline {
           args '--user root'
         }
       }
+      when {
+        changeset "**/vote/**"
+      }
       steps{ 
         echo 'Running Unit Tests on vote app.' 
         dir('vote'){ 
@@ -108,6 +114,9 @@ pipeline {
     }
     stage('vote-docker-package'){
       agent any
+      when {
+        changeset "**/vote/**"
+      }
       steps{
         echo 'Packaging vote app with docker'
         script{
