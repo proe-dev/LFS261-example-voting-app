@@ -1,0 +1,46 @@
+volumes:
+  db-data:
+networks:
+  instavote:
+    driver: bridge
+services:
+    vote:
+      image: meapeze/vote:latest
+      ports:
+        - 5000:80
+      depends_on:
+        - redis
+      networks:
+        - instavote
+    redis:
+      image: redis:alpine
+      networks:
+        - instavote
+    db:
+      image: postgres:15-alpine
+      networks:
+        - instavote
+      environment:
+        POSTGRES_USER: "postgres"
+        POSTGRES_PASSWORD: "postgres"
+      volumes:
+        - "db-data:/var/lib/postgresql/data"
+        - "./healthchecks:/healthchecks"
+      healthcheck:
+        test: /healthchecks/postgres.sh
+        interval: "5s"
+    result:
+      image: meapeze/result:latest
+      ports:
+        - 5001:80
+      depends_on:
+        - db
+      networks:
+        - instavote
+    worker:
+      image: meapeze/worker:latest
+      networks:
+        - instavote
+      depends_on:
+        - db
+        - redis
